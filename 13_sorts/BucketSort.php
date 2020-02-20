@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * 桶排序
+ */
 function buckerSort(&$arr, $bucketSize = 0)
 {
     $count = count($arr);
