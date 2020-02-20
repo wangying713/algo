@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 如何实现浏览器的前进、后退功能？
  * 其实，用两个栈就可以非常完美地解决这个问题。
@@ -12,7 +13,8 @@
  *
  * Class Brower
  */
-class Brower {
+class Brower
+{
 
     /**
      * 后退栈
@@ -39,14 +41,16 @@ class Brower {
      *
      * @param $url
      */
-    public function open($url) {
+    public function open($url)
+    {
         $this->backStack->push($url);
     }
 
     /**
      * 前进
      */
-    public function forward() {
+    public function forward()
+    {
         // 压栈
         $popVal = $this->forwardStack->pop();
         if ($popVal != null) {
@@ -58,7 +62,8 @@ class Brower {
     /**
      * 后退
      */
-    public function goBack() {
+    public function goBack()
+    {
         // 压栈
         $popVal = $this->backStack->pop();
         if ($popVal != null) {
@@ -72,7 +77,8 @@ class Brower {
      *
      * @return bool
      */
-    public function canForward() {
+    public function canForward()
+    {
         return $this->forwardStack->getSize() > 0 ? true : false;
     }
 
@@ -81,18 +87,19 @@ class Brower {
      *
      * @return bool
      */
-    public function canBack() {
+    public function canBack()
+    {
         return $this->backStack->getSize() > 0 ? true : false;
     }
 
     /**
      * 清空
      */
-    public function clear() {
+    public function clear()
+    {
         $this->backStack->clear();
         $this->forwardStack->clear();
     }
-
 }
 
 /**
@@ -100,7 +107,8 @@ class Brower {
  *
  * Class Node
  */
-class Node {
+class Node
+{
     public $val;
     public $next;
     public function __construct($val = null, $next = null)
@@ -110,7 +118,8 @@ class Node {
     }
 }
 
-class Stack {
+class Stack
+{
 
     private $stack;
     private $size = 0;
@@ -134,7 +143,7 @@ class Stack {
         }
 
         if ($this->size > 0) {
-            $this->size --;
+            $this->size--;
         }
 
         $val = $this->stack->val;
@@ -153,7 +162,7 @@ class Stack {
         $node = new Node($data);
         $node->next = $this->stack;
         $this->stack = $node;
-        $this->size ++;
+        $this->size++;
         return $this;
     }
 
@@ -184,7 +193,6 @@ class Stack {
     {
         return $this->size;
     }
-
 }
 
 $brower = new Brower();

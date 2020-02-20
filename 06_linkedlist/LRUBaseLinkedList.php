@@ -1,4 +1,5 @@
 <?php
+
 /**
  * LRU 最近最少使用策略 LRU（Least Recently Used）。
  *
@@ -16,7 +17,8 @@
  *
  * Class LRUBaseLinkedListNode
  */
-class LRUBaseLinkedListNode {
+class LRUBaseLinkedListNode
+{
 
     /**
      * 数据值
@@ -50,7 +52,8 @@ class LRUBaseLinkedListNode {
      * @param $node
      * @return $this
      */
-    public function setNext($node) {
+    public function setNext($node)
+    {
         $this->next = $node;
         return $this;
     }
@@ -61,10 +64,10 @@ class LRUBaseLinkedListNode {
      * @param $var
      * @return mixed
      */
-    public function __get($var) {
+    public function __get($var)
+    {
         return $this->$var;
     }
-
 }
 
 /**
@@ -72,7 +75,8 @@ class LRUBaseLinkedListNode {
  *
  * Class LRUBaseLinkedList
  */
-class LRUBaseLinkedList {
+class LRUBaseLinkedList
+{
 
     /**
      * 头数据
@@ -110,7 +114,8 @@ class LRUBaseLinkedList {
      * @param $data
      * @return $this
      */
-    public function insertHead($data) {
+    public function insertHead($data)
+    {
 
         $preNode = $this->getPreNode($data);
 
@@ -138,7 +143,7 @@ class LRUBaseLinkedList {
     {
         // 空链表
         if ($this->head->next == null) {
-            return ;
+            return;
         }
 
         // 获得倒数第二个节点，让倒数第二个节点的 next 为 null
@@ -151,7 +156,6 @@ class LRUBaseLinkedList {
         $this->count--;
 
         return $this;
-
     }
 
     /**
@@ -180,7 +184,7 @@ class LRUBaseLinkedList {
 
         $node = new LRUBaseLinkedListNode($data, $next);
         $this->head->setNext($node);
-        $this->count ++;
+        $this->count++;
     }
 
     // 如果存在，获取我上一个节点的指针
@@ -206,6 +210,3 @@ $rs->insertHead(13)
 
 
 $rs->printAll();
-
-
-

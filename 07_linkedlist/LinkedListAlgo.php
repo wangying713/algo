@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 1) 单链表反转
  * 2) 链表中环的检测
@@ -6,7 +7,8 @@
  * 4) 删除链表倒数第n个结点
  * 5) 求链表的中间结点
  */
-class LinkedListAlgo {
+class LinkedListAlgo
+{
 
     /**
      * @var LRULinkedListNode|null
@@ -21,7 +23,8 @@ class LinkedListAlgo {
      */
     public function reverse(Node $node)
     {
-        $cur = $node; $pre = null;
+        $cur = $node;
+        $pre = null;
         while ($cur != null) {
             $next = $cur->getNext();
             // 将当前指针设置为 pre
@@ -148,7 +151,7 @@ class LinkedListAlgo {
         $count = 0;
         while ($node != null) {
             $node = $node->getNext();
-            $count ++;
+            $count++;
         }
 
         // 要删除第几个节点
@@ -157,7 +160,7 @@ class LinkedListAlgo {
         $node = $head;
         while ($nextNum > 1) {
             $node = $node->getNext();
-            $nextNum --;
+            $nextNum--;
         }
 
         $node->setNext($node->getNext()->getNext());
@@ -207,20 +210,21 @@ class LinkedListAlgo {
      * @param Node $head
      * @return Node|null
      */
-    public function getMiddleNode(Node $head) {
+    public function getMiddleNode(Node $head)
+    {
         $node = $head;
         // 暴力处理方法
         $count = 0;
-        while($node != null) {
+        while ($node != null) {
             $node = $node->getNext();
             $count++;
         }
 
-        $center = (int) ($count/2);
+        $center = (int) ($count / 2);
 
-        while($center > 0) {
+        while ($center > 0) {
             $head = $head->getNext();
-            $center --;
+            $center--;
         }
 
         return $head;
@@ -296,10 +300,10 @@ class LinkedListAlgo {
     {
         return $this->node;
     }
-
 }
 
-class Node {
+class Node
+{
     protected $data;
     protected $next;
 
@@ -309,16 +313,19 @@ class Node {
         $this->next = $next;
     }
 
-    public function setNext($node) {
+    public function setNext($node)
+    {
         $this->next = $node;
         return $this;
     }
 
-    public function getNext() {
+    public function getNext()
+    {
         return $this->next;
     }
 
-    public function getData() {
+    public function getData()
+    {
         return $this->data;
     }
 }
@@ -413,7 +420,7 @@ $linkedListAlgo1->insertTail(1)
 
 
 $list1 = $linkedListAlgo1->getNode();
-$rs = $linkedListAlgo1-> getMiddleNode($list1);
+$rs = $linkedListAlgo1->getMiddleNode($list1);
 
 echo sprintf("start>>----------------查找链表的中间节点--------------\n");
 $linkedListAlgo->printAll($rs);

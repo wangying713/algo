@@ -1,8 +1,10 @@
 <?php
+
 /**
  * 基于链表实现队列
  */
-class QueueByLinkedList {
+class QueueByLinkedList
+{
 
     protected $tail;
 
@@ -23,7 +25,8 @@ class QueueByLinkedList {
     }
 }
 
-class Node {
+class Node
+{
     public $val;
     public $next;
     public function __construct($val = null, $next = null)

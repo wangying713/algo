@@ -1,8 +1,10 @@
 <?php
+
 /**
  * 基于数组实现队列
  */
-class QueueByArray {
+class QueueByArray
+{
 
     /**
      * 头指针
@@ -58,7 +60,7 @@ class QueueByArray {
         if ($this->head == $this->tail) return null;
         $ret = $this->items[$this->head];
 
-        $this->head = ($this->head+1) % $this->maxNum;
+        $this->head = ($this->head + 1) % $this->maxNum;
 
         return $ret;
     }

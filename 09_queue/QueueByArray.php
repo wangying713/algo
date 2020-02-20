@@ -1,8 +1,10 @@
 <?php
+
 /**
  * 基于数组实现队列
  */
-class QueueByArray {
+class QueueByArray
+{
 
     /**
      * 头指针
@@ -49,8 +51,8 @@ class QueueByArray {
 
             // 偏移
             $this->tail = $this->tail - $this->head;
-            for ($i = 0 ; $i < $this->tail ; $i++) {
-                $this->items[$i] = $this->items[$i+$this->tail-1];
+            for ($i = 0; $i < $this->tail; $i++) {
+                $this->items[$i] = $this->items[$i + $this->tail - 1];
             }
         }
 
@@ -83,4 +85,3 @@ $queue->enqueue(8);
 //print_r($queue);
 
 die;
-
