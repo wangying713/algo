@@ -9,10 +9,6 @@ class QueueByLinkedList
     protected $head;
     protected $tail;
 
-    public function __construct()
-    {
-    }
-
     public function enqueue($val)
     {
         if ($this->tail == null) {
@@ -27,7 +23,10 @@ class QueueByLinkedList
 
     public function dequeue()
     {
-        if ($this->head == null) return null;
+        if ($this->head == null) {
+            return null;
+        }
+
         $val = $this->head->val;
         $this->head = $this->head->next;
         if ($this->head == null) {
