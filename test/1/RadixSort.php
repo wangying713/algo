@@ -6,8 +6,9 @@
 class RadixSort
 {
 
-    public static function sort(&$nums)
+    public static function sort(array &$nums)
     {
+
         $max = max($nums);
         $maxCount = strlen($max);
         for ($i = 0; $i < $maxCount; $i++) {
@@ -15,21 +16,21 @@ class RadixSort
         }
     }
 
-    protected static function _radixSort(&$nums, $loop)
+    protected static function _radixSort(array &$nums, $loop)
     {
         $count = count($nums);
-        $divisor = pow(10, $loop);
-        $buckets = [];
+        $div = pow(10, $loop);
         for ($i = 0; $i < $count; $i++) {
-            $index = ($nums[$i] / $divisor) % 10;
+            $index = ($nums[$i] / $div) % 10;
             $buckets[$index][] = $nums[$i];
         }
-        // 位排序
+
         $k = 0;
         for ($i = 0; $i < 10; $i++) {
             if (!isset($buckets[$i])) {
                 continue;
             }
+
             foreach ($buckets[$i] as $val) {
                 $nums[$k++] = $val;
             }
