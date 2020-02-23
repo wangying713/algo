@@ -2,7 +2,7 @@
 
 /**
  * 快速排序
- * 
+ *
  * 选中一个数当做比较点，将比比较点小的放左边，比比较点大的放右边。比较点放中间，不断的分解。直到不能再继续分解。
  */
 class Sort
@@ -22,7 +22,9 @@ class Sort
     protected function quickSortInterally(&$nums, $l, $r)
     {
         // 终止条件 如果没有元素未处理的元素，停止递归
-        if ($l >= $r) return;
+        if ($l >= $r) {
+            return;
+        }
 
         $border = $this->partition($nums, $l, $r);
 
@@ -36,8 +38,15 @@ class Sort
      */
     protected function partition(&$nums, $l, $r)
     {
-        // 对比值
+        // 随机方法
+        // $rand = rand($l, $r);
+        // $tmp = $nums[$r];
+        // $nums[$r] = $nums[$rand];
+        // $nums[$rand] = $tmp;
+
+        // 枢纽
         $pivot = $nums[$r];
+
         // 边界
         $border = $l;
         for ($i = $l; $i < $r; $i++) {
