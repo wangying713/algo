@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 归并排序是一种分治的思想，先分解，在合并
  */
@@ -15,7 +14,9 @@ class MergeSrot
     protected function mergeSortInterally(&$nums, $l, $r)
     {
         // 终止条件
-        if ($l >= $r) return;
+        if ($l >= $r) {
+            return;
+        }
 
         // 取p到r之间的中间位置q,防止（p+r）的和超过int类型最大值
         $p = $l + (int) (($r - $l) / 2);

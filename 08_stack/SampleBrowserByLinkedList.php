@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 如何实现浏览器的前进、后退功能？
  * 其实，用两个栈就可以非常完美地解决这个问题。
@@ -127,7 +126,7 @@ class Stack
     public function __construct()
     {
         // 哨兵 简化代码复杂度
-        $this->stack =  new Node();
+        $this->stack = new Node();
     }
 
     /**

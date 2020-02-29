@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 基于数组实现队列
  */
@@ -46,7 +45,7 @@ class QueueByArray
         if ($this->tail >= $this->maxNum) {
             if (($this->tail + 1) % $this->maxNum == $this->head) {
                 echo "队列已满\n";
-                return NULL;
+                return null;
             }
         }
 
@@ -57,7 +56,10 @@ class QueueByArray
 
     public function dequeue()
     {
-        if ($this->head == $this->tail) return null;
+        if ($this->head == $this->tail) {
+            return null;
+        }
+
         $ret = $this->items[$this->head];
 
         $this->head = ($this->head + 1) % $this->maxNum;

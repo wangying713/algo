@@ -69,13 +69,19 @@ class LinkedListAlgo
      */
     public function checkCircle(Node $node)
     {
-        if ($node == null) return false;
+        if ($node == null) {
+            return false;
+        }
+
         $slow = $node;
         $fast = $node->getNext();
         while ($fast != null && $fast->getNext() != null) {
             $slow = $slow->getNext();
             $fast = $fast->getNext()->getNext();
-            if ($slow == $fast) return true;
+            if ($slow == $fast) {
+                return true;
+            }
+
         }
 
         return false;
@@ -84,8 +90,8 @@ class LinkedListAlgo
     /**
      * 将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
      * 示例：
-        输入：1->2->4, 1->3->4
-        输出：1->1->2->3->4->4
+    输入：1->2->4, 1->3->4
+    输出：1->1->2->3->4->4
      *
      * @param Node $list1
      * @param Node $list2
@@ -106,8 +112,13 @@ class LinkedListAlgo
             $pre = $pre->getNext();
         }
 
-        if ($l1 == null) $pre->setNext($l2);
-        if ($l2 == null) $pre->setNext($l1);
+        if ($l1 == null) {
+            $pre->setNext($l2);
+        }
+
+        if ($l2 == null) {
+            $pre->setNext($l1);
+        }
 
         return $node->getNext();
     }
@@ -121,8 +132,13 @@ class LinkedListAlgo
      */
     public function mergeLinkedListRecursion($l1, $l2)
     {
-        if ($l1 == null) return $l2;
-        if ($l2 == null) return $l1;
+        if ($l1 == null) {
+            return $l2;
+        }
+
+        if ($l2 == null) {
+            return $l1;
+        }
 
         if ($l1->getData() < $l2->getData()) {
             $l1->setNext($this->mergeLinkedListRecursion($l1->getNext(), $l2));
@@ -135,12 +151,12 @@ class LinkedListAlgo
 
     /**
      *  给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
-        示例：
-        给定一个链表: 1->2->3->4->5, 和 n = 2.
-        当删除了倒数第二个节点后，链表变为 1->2->3->5.
-        来源：力扣（LeetCode）
-        链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list
-        著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    示例：
+    给定一个链表: 1->2->3->4->5, 和 n = 2.
+    当删除了倒数第二个节点后，链表变为 1->2->3->5.
+    来源：力扣（LeetCode）
+    链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list
+    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
      * @param Node $node
      * @param $n
@@ -204,8 +220,8 @@ class LinkedListAlgo
 
     /**
      *
-        给定一个带有头结点 head 的非空单链表，返回链表的中间结点。
-        如果有两个中间结点，则返回第二个中间结点。
+    给定一个带有头结点 head 的非空单链表，返回链表的中间结点。
+    如果有两个中间结点，则返回第二个中间结点。
      *
      * @param Node $head
      * @return Node|null
@@ -280,7 +296,7 @@ class LinkedListAlgo
      *
      * @param Node $node
      */
-    function printAll($node)
+    public function printAll($node)
     {
         $rs = '';
         while ($node != null) {
@@ -408,7 +424,6 @@ echo sprintf("start>>----------------删除链表中倒数第n个节点---------
 $linkedListAlgo->printAll($rs);
 echo sprintf("end>>------------------删除链表中倒数第n个节点--------------\n");
 
-
 // 查找链表的中间节点
 // -----------------------------------------------------------------------
 $linkedListAlgo1 = new LinkedListAlgo();
@@ -417,7 +432,6 @@ $linkedListAlgo1->insertTail(1)
     ->insertTail(3)
     ->insertTail(4)
     ->insertTail(5);
-
 
 $list1 = $linkedListAlgo1->getNode();
 $rs = $linkedListAlgo1->getMiddleNode($list1);

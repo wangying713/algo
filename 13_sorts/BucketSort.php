@@ -1,20 +1,23 @@
 <?php
-
 /**
  * 桶排序
  */
 function buckerSort(&$arr, $bucketSize = 0)
 {
     $count = count($arr);
-    if ($count < 2) return;
+    if ($count < 2) {
+        return;
+    }
 
     // 桶的大小
-    if ($bucketSize == 0) $bucketSize = $count;
+    if ($bucketSize == 0) {
+        $bucketSize = $count;
+    }
 
     $min = min($arr);
     $max = max($arr);
 
-    $buckets =  [];
+    $buckets = [];
     // 将数组分配到各个桶中
     for ($i = 0; $i < $count; $i++) {
         $index = ceil(($arr[$i] - $min) / $bucketSize);

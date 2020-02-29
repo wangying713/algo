@@ -1,5 +1,4 @@
 <?php
-
 /**
  * LRU 最近最少使用策略 LRU（Least Recently Used）。
  *
@@ -43,7 +42,7 @@ class LRUBaseLinkedListNode
     public function __construct($data = null, $next = null)
     {
         $this->data = $data;
-        $this->next =  $next;
+        $this->next = $next;
     }
 
     /**
@@ -207,6 +206,5 @@ $rs->insertHead(13)
     ->insertHead(10)
     ->insertHead(12)
     ->insertHead(14);
-
 
 $rs->printAll();

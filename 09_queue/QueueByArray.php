@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 基于数组实现队列
  */
@@ -46,7 +45,7 @@ class QueueByArray
         if ($this->tail >= $this->maxNum) {
             if ($this->head == 0) {
                 echo "队列已满\n";
-                return NULL;
+                return null;
             }
 
             // 偏移
@@ -79,8 +78,6 @@ $queue->dequeue();
 $queue->enqueue(6);
 $queue->enqueue(7);
 $queue->enqueue(8);
-
-
 
 //print_r($queue);
 
