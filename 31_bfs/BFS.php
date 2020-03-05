@@ -92,6 +92,14 @@ class Graph
         }
     }
 
+    /**
+     * 深度优先策略
+     *
+     * @param [int] $s
+     * @param [int] $t
+     *
+     * @return void
+     */
     public function dfs($s, $t)
     {
         $this->dfsFound = false;
