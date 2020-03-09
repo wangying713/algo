@@ -9,21 +9,34 @@
  *      所以，尽管理论上的最坏情况时间复杂度是 O(n*m)，但是，统计意义上，大部分情况下，算法执行效率要比这个高很多。
  *  第二，朴素字符串匹配算法思想简单，代码实现也非常简单。简单意味着不容易出错，如果有 bug 也容易暴露和修复。在工程中，在满足性能要求的前提下，简单是首选。这也是我们常说的KISS（Keep it Simple and Stupid）设计原则。
  */
-
-function bfSearch($mstring, $pstring)
+function bfSearch(string $main, string $pattern)
 {
-    $mlength = count($mlength);
-    $plength = count($pstring);
-    // 如果主串比模串短，那么肯定是找不见的
+    $mlength = strlen($main);
+    $plength = strlen($pattern);
+
+    // 不可能找到
     if ($mlength == 0 || $plength == 0 || $mlength < $plength) {
         return -1;
     }
 
-    for ($i = 0; $i <= $mlength; $i++) {
-        $substr = '';
+    // 只需要循环 main-pattern 的次数就可以了
+    for ($i = 0; $i <= $mlength - $plength; $i++) {
+
+        // 裁切 pattern 长度的字符串
+        $substr = substr($main, $i, $plength);
+
+        if ($substr == $pattern) {
+            return $i;
+        }
+
     }
+
+    return -1;
 }
+
 $mstring = 'abcd227fac';
 $pstring = 'ac';
 
-bfSearch($mstring, $pstring);
+$rs = bfSearch($mstring, $pstring);
+
+var_dump($rs);
