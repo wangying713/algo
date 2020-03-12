@@ -4,6 +4,11 @@
  * 王争老师的写法总感觉太过复杂，要不是刻意翻代码看，还是不好理解。
  * 参考了阮一峰老师的博客，简单易懂，感觉用这种方法就刻意
  *  参考地址：http: //www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html
+ *
+ * 时间复杂度分析：
+ *  实际上，BM 算法的时间复杂度分析起来是非常复杂，这篇论文“A new proof of the linearity of the Boyer-Moore string *
+ *  searching algorithm”证明了在最坏情况下，BM 算法的比较次数上限是 5n。这篇论文“Tight bounds on the complexity of the
+ *  Boyer-Moore string matching algorithm”证明了在最坏情况下，BM 算法的比较次数上限是 3n。你可以自己阅读看看。
  */
 class StringBM
 {
