@@ -1,19 +1,16 @@
 <?php
 /**
+ * KMP 的另一种实现
  * KPM 算法是由三位大佬发明的
- *  主要是在好前缀中，找到一种高效的偏移比较算法，思想与 RM 算法类似
- *  那怎样来找到一种高效的偏移方法呢？
- *  1. 在主串和模式串中对比第一个字符，直到发生匹配，main[i]==partten[1]
- *  2. 当主串第 i 个元素与模式串第一个元素发生匹配时，这就要引入好前缀的概念
- *     1. 拿好前缀本身，在它的后缀子串中，查找最长的那个可以跟好前缀的前缀子串匹配的
- *     2. 假设最长的可匹配的那部分前缀子串(最长可匹配前缀子串)是{v}，长度是 k。我们把模式串一次性往后滑动 j-k 位
- *     3. 好前缀分前缀和后缀，步骤2是为了查找前缀和后缀重合的不分
- *
- *  3. 最难理解的部分起始是 next 了，当最后不匹配，需要查找前一个 k=$next[k]，其实是向前查找一位，因为有下标对应的关系
- *
- *
- * 　　移动位数 = 已匹配的字符数 - 对应的部分匹配值
- *
+ *  主要是在好前缀中，找到一种高效的偏移比较算法，起始时 RK(32讲) 算法的升级。
+ *  目的是怎样在好前缀的基础上多滑动几位，来提升效率呢？
+ *  匹配的步骤
+ *      1. 在主串与模式串之前逐一比较，如果不匹配则主串偏移，一直到第一个字符匹配成功，形成好前缀
+ *      2. 我们用已经预先处理好的前缀表（或失败函数）来确定滑动位数，这样就可以多滑动几位了，提升匹配效率
+ *      3. 移动位数=已匹配的字符数-对应的部分匹配值。或者将公共前缀放到公共后缀的位置
+ *  如何计算部分匹配索引|失效函数表
+ *      1. 暴力查找法
+ *      2. 通过前一个已经计算的值来计算，如果匹配，加1，否则查找上一个是否匹配
  *
  * 参考链接：
  *  最终还是参考了阮一峰老师的文章简单易懂
@@ -21,37 +18,6 @@
  */
 class StringKPM
 {
-    public static function kpm($main, $partten)
-    {
-        $meln = strlen($main);
-        $plen = strlen($partten);
-
-        // 部分匹配表
-        $next = static::getNexts($partten);
-        $j = 0;
-        for ($i = 0; $i < $meln; $i++) {
-            // 有了好前缀后，当有坏字符的出现
-            while ($j > 0 && $main[$i] != $partten[$j]) { // 一直找到 a[i]和 j[j]
-                // 移动的位数 = 已经匹配的字符数 - 对应的那部分匹配值
-                // $j = $j - ($j - ($next[$j - 1] + 1));
-                // 经过简写
-                $j = $next[$j - 1] + 1;
-            }
-
-            // 如果相等模式串偏移（主串与模式串一起偏移）
-            if ($main[$i] == $partten[$j]) {
-                $j++;
-            }
-
-            // 如果模式串偏移到最后，则说明匹配成功
-            if ($j == $plen) {
-                // 起始位置需要减去模式串的长度
-                return $i - $plen + 1;
-            }
-        }
-
-        return -1;
-    }
 
     /**
      * 获得不分匹配表|失效函数
@@ -63,41 +29,109 @@ class StringKPM
      *
      * @return int
      */
-    public static function getNexts($partten)
+    public static function getPrefix1(string $partten)
     {
-        $len = strlen($partten);
-        $next = [
-            0 => -1,
+        $prefix = [
+            0 => 0,
         ];
+        $plen = strlen($partten);
 
-        $k = -1;
-        for ($i = 1; $i < $len; $i++) {
-
-            // 如果下一个字符不匹配
-            while ($k != -1 && $partten[$k + 1] != $partten[$i]) {
-                // 查看次长串是否匹配
-                // 按道理来说，次上传应该就是 k，但是如果 k=k会形成死循环
-                // 那怎样解决呢？起始 next[$k]对应的值就是次长串对应的值，不信你打印看一下
-                $k = $next[$k];
+        $i = 1;
+        $len = 0;
+        $t = 0;
+        while ($i < $plen) {
+            if ($partten[$len] == $partten[$i]) {
+                $len++;
+                // 利用上一个最长前缀+1
+                $prefix[$i] = $len;
+                $i++;
+            } else {
+                // 边界限定
+                if ($len > 0) {
+                    // 无需 i++
+                    $len = $prefix[$len - 1];
+                } else {
+                    $prefix[$i] = $len;
+                    $i++;
+                }
             }
-
-            // 如果匹配成功，那么标记匹配数量+1
-            if ($partten[$k + 1] == $partten[$i]) {
-                $k++;
-            }
-
-            // 记录当前字符的匹配数量
-            $next[$i] = $k;
         }
-
-        return $next;
-
+        return $prefix;
     }
 
+    /**
+     * 获得前缀表
+     *
+     * @param [string] $partten
+     *
+     * @return array
+     */
+    public static function getPrefix(string $partten)
+    {
+        $prefix = [
+            0 => 0,
+        ];
+        $plen = strlen($partten);
+
+        $len = 0;
+        for ($i = 1; $i < $plen; $i++) {
+            while ($len > 0 && $partten[$len] != $partten[$i]) {
+                // 缩小范围
+                $len = $prefix[$len - 1];
+            }
+
+            if ($partten[$len] == $partten[$i]) {
+                $len++;
+            }
+            $prefix[$i] = $len;
+        }
+
+        return $prefix;
+    }
+
+    /**
+     * kpm
+     *
+     * @param string $main
+     * @param string $partten
+     *
+     * @return int
+     */
+    public static function kmp(string $main, string $partten)
+    {
+        $mlen = strlen($main);
+        $plen = strlen($partten);
+
+        if ($mlen == 0 || $plen == 0 || $mlen < $plen) {
+            return false;
+        }
+
+        $prefix = static::getPrefix($partten);
+        $j = 0;
+        for ($i = 0; $i < $mlen; $i++) {
+            // 一直偏移，直到相等
+            while ($j > 0 && $main[$i] != $partten[$j]) {
+                // 偏移
+                $j = $prefix[$j - 1];
+            }
+
+            // 相等，j 偏移
+            if ($main[$i] == $partten[$j]) {
+                $j++;
+            }
+
+            // j 已经匹配到最右侧了
+            if ($j == $plen - 1) {
+                return $i - ($plen - 1);
+            }
+        }
+
+        return -1;
+    }
 }
 
-$main = 'BBC ABCDAB ABCDABCDABDE';
-$parttenxxxxxxxxxxxxx = 'ABCDABD';
+$main = 'BBC ABCDAB ABCDABCDABSDE';
+$parttenxxxxxxxxxxxxx = 'ABSDE';
 $xxxxxxx = '0123456';
-$rs = StringKPM::kpm($main, $parttenxxxxxxxxxxxxx);
+$rs = StringKPM::kmp($main, $parttenxxxxxxxxxxxxx);
 var_dump($rs);

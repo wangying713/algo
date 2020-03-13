@@ -1,7 +1,7 @@
 <?php
 /**
- * Trie 树，也叫“字典树”。顾名思义，它是一个树形结构
- *
+ * Trie 树也叫字典书，是一种树形结构，它是一种专门处理字符串匹配的数据结构
+ * Tire 树的本质是就是利用字符串之间的公共前缀，将重复的前缀合并在一起最后构造成树。
  * 时间复杂度分析：
  *  用 Trie 树会非常高效。
  *  构建 Trie 树的过程，需要扫描所有的字符串，时间复杂度是 O(n)（n 表示所有字符串的长度和）。
@@ -32,7 +32,7 @@ class Trie
         $length = strlen($text);
         for ($i = 0; $i < $length; $i++) {
             // 从下标0开始插入
-            $index = ord($text[$i]) - ord('a');
+            $index = ord($text[$i]);
             if (!isset($p->children[$index])) {
                 $newNode = new TrieNode($text[$i]);
                 $p->children[$index] = $newNode;
@@ -40,6 +40,7 @@ class Trie
             $p = $p->children[$index];
         }
 
+        // 标记完全匹配的位置
         $p->isEndingChar = true;
     }
 
@@ -55,18 +56,15 @@ class Trie
         $p = $this->root;
         $length = strlen($pattern);
         for ($i = 0; $i < $length; $i++) {
-            $index = ord($pattern[$i]) - ord('a');
+            $index = ord($pattern[$i]);
             if (!isset($p->children[$index])) {
                 return false;
             }
             $p = $p->children[$index];
         }
 
-        if ($p->isEndingChar == false) {
-            return false;
-        } else {
-            return true;
-        }
+        // 是否完全匹配
+        return $p->isEndingChar;
     }
 
 }
