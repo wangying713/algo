@@ -74,3 +74,6 @@ function algo($area)
 
     return $rs;
 }
+
+$rs = algo($area);
+print_r($rs);
