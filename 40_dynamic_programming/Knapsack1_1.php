@@ -24,7 +24,6 @@ function knapsack($weight, $w)
                 $total = $curWeight + ($j - $curWeight);
                 if ($total > $table[$i - 1][$j]) {
                     $table[$i][$j] = 1;
-
                 }
             }
         }
