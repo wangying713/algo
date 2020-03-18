@@ -1,10 +1,6 @@
 <?php
 /**
- * 背包问题
- *  1. 生成一张表
- *  2. 当前重量不足背包重量，直接获得上一次获得的结果
- *  3. max($table[$i - 1][$j], $currentPrice + $prevPrice);
- *
+ * 自己理解背包问题增加价值的背包问题
  */
 class Bag
 {
@@ -15,9 +11,9 @@ class Bag
             $table[-1][$i] = 0;
         }
 
-        for ($i = 0; $i < count($arr); $i++) {
-            $table[$i][0] = 0;
-        }
+        // for ($i = 0; $i < count($arr); $i++) {
+        //     $table[$i][0] = 0;
+        // }
 
         for ($i = 0; $i < count($arr); $i++) {
             // j代表质量
