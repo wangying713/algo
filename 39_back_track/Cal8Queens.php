@@ -39,6 +39,7 @@ class Cal8Queens
                 $this->cal8Queens($row + 1);
             }
         }
+
     }
 
     /**

@@ -136,7 +136,7 @@ class Heap
             $count = count($arr) - 1;
         }
 
-        // 重 i/2开始堆化
+        //  叶子节点不需要处理，在父节点开始处理 count/2
         $i = (int) ($count / 2);
         for ($i; $i >= 1; $i--) {
             $this->heapify($arr, $i, $count);
@@ -168,7 +168,7 @@ class Heap
                 $maxPos = $l;
             }
 
-            // 如果左子树比又子树的值小，那么直接标记又子树，以免再一次替换
+            // 如果左子树比右子树的值小，那么直接标记右侧子树，以免再一次替换
             $r = $index * 2 + 1;
             if ($r <= $n && $arr[$maxPos] < $arr[$r]) {
                 $maxPos = $r;
@@ -218,5 +218,8 @@ $rs = new Heap(10);
 // $rs->removeMax();
 
 $arr = [null, 9, 6, 3, 1, 5];
-$rs->sort($arr);
+$arr = [null, 1, 2, 3, 4, 5];
+
+$rs->buildHeap($arr);
+// $rs->sort($arr);
 print_r($arr);

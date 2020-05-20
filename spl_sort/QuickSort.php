@@ -69,7 +69,8 @@ class QuickSort
         $border = $l;
         for ($i = $l; $i < $r; $i++) {
             if ($nums[$i] < $povit) {
-                // 当前值与临界点相等的证明是同一个值，没必要交换
+                // 临界点与 $i 相同，代表没有需要交换得值，直接偏移指针即可
+                // 否则需要交换小于 povit 的值到临界点得位置（小的在前，大的在后）
                 if ($border != $i) {
                     $tmp = $nums[$border];
                     $nums[$border] = $nums[$i];

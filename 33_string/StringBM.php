@@ -61,6 +61,8 @@ class StringBM
         // 生成模式串对应的 key
         $bc = $this->generateBC($pattern);
 
+        
+
         // 起始位置
         // $mlen = $i + $plen
         $i = 0;
@@ -135,16 +137,18 @@ class StringBM
 
         // 生成模式串对应的 key
         $bc = $this->generateBC($pattern);
+        // print_r($bc);
 
+        print_r($pattern);
         // 生成好后缀 index
         $suffix = $this->generateGSMy($pattern);
-
+        print_r($suffix);
         $i = 0;
         // 起始的位置小于等于结束的位置-plen
         while ($i <= $mlen - $plen) {
 
             // 开始匹配的位置
-            $j = $j = $plen - 1;
+            $j = $plen - 1;
 
             for ($j = $plen - 1; $j >= 0; $j--) {
                 // 遇见坏字符
@@ -161,14 +165,16 @@ class StringBM
 
             // 获得坏字符的 index
             $x = $bc[ord($main[$i + $j])];
+
             // 坏字符的偏移数量
             $x = $j - $x;
-
+           
             // 获得好后缀的偏移位树
             $y = 0;
             if ($main[$i + $plen - 1] == $pattern[$plen - 1]) {
                 $y = $plen - 1 - $suffix[$main[$i + $plen - 1]];
             }
+            
 
             // 偏移位置
             $i = $i + max($x, $y);
@@ -185,13 +191,12 @@ class StringBM
      */
     private function generateGSMy($pattern)
     {
+        
         $length = strlen($pattern);
 
-        // 记录第一次出现的位置
-        $target = $pattern[$length - 1];
-
         $suffix = [];
-        for ($i = $length - 2; $i >= 0; $i--) {
+        // 去重，更新首次出现的位置
+        for ($i = $length - 1; $i >= 0; $i--) {
             $suffix[$pattern[$i]] = $i;
         }
 
@@ -235,6 +240,7 @@ class StringBM
             }
 
             // 好后缀处理规则
+         
             $x = $j - $bc[ord($main[$i + $j])];
             $y = 0;
             if ($j < $plength - 1) {
@@ -260,6 +266,8 @@ class StringBM
     private function moveByGS($j, $m, $suffix, $prefix)
     {
 
+
+        print_r($prefix);
         // 好后缀的长度
         $k = $m - 1 - $j;
         if ($suffix[$k] != -1) {
@@ -285,6 +293,6 @@ $rs = new StringBM();
 $mainaaa = "HERE IS A SIMPLE PLEMPLE";
 $pattern = "PLEMPLE";
 
-$rs = $rs->bm($mainaaa, $pattern);
+$rs = $rs->bmMy($mainaaa, $pattern);
 
 var_dump($rs);

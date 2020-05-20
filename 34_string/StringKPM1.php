@@ -80,6 +80,7 @@ class StringKPM
             while ($len > 0 && $partten[$len] != $partten[$i]) {
                 // 缩小范围
                 $len = $prefix[$len - 1];
+                // $len = 0;
             }
 
             if ($partten[$len] == $partten[$i]) {
@@ -133,7 +134,9 @@ class StringKPM
 }
 
 $main = 'BBC ABCDAB ABCDABCDABSDE';
-$parttenxxxxxxxxxxxxx = 'ABSDE';
+$parttenxxxxxxxxxxxxx = 'ababaa';
 $xxxxxxx = '0123456';
-$rs = StringKPM::kmp($main, $parttenxxxxxxxxxxxxx);
-var_dump($rs);
+$rs = StringKPM::getPrefix($parttenxxxxxxxxxxxxx);
+// var_dump($rs);
+    
+print_r($rs);
